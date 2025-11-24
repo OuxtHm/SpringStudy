@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 클래스 등록 : bean = id가 중복되면 오류 발생 -->
+	<bean id="mem1" class="com.sist.main2.Member" 
+		scope="prototype"
+		c:no="1"
+		c:name="홍길동"
+		c:address="서울"
+	/>
+	
+	<bean id="mem2" class = "com.sist.main2.Member"
+		p:no="2"
+		p:name="심청이"
+		p:address="경기"
+		init-method="init"
+		destroy-method="destroy"
+	/>
+</beans>

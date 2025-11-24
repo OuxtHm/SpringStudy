@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="h1" class="com.sist.main3.Human"
+		p:name="홍길동"
+		p:sex="남자"
+		p:address="서울"
+		p:phone="010-1111-1111"
+	/>
+	<!-- 
+		Human h1 = new Human()
+		h1.setName("홍길동")
+	 -->
+	<bean id="h2" class="com.sist.main3.Human"
+		p:name="심청이"
+		p:sex="여자"
+		p:address="경기"
+		p:phone="010-2222-2222"
+	/>
+	
+	<bean id="mem" class="com.sist.main3.Member"
+		p:no="1"
+		p:hman-ref="h1"
+	/>
+	<bean id="std" class="com.sist.main3.Student"
+		p:hakbun="1"
+		p:hman-ref="h12"
+	/>
+</beans>

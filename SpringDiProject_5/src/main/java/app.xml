@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<!-- 1. 데이터베이스 정보 설정 -->
+	<util:properties id="db" location="classpath:db.properties"/>
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="#{db['dirver']}"
+		p:url="#{db['url']}"
+		p:username="#{db['username']}"
+		p:password="#{db['password']}"
+	/>
+	<!-- 2. SqlSessionFactory 생성 -->
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="ds"
+	/>
+	<!-- 3. Mapper에 있는 구현 -->
+	<bean id="mapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="ssf"
+		p:mapperInterface="com.sist.mapper.FoodMapper"
+	/> 
+	<!-- <mybatis-spring:scan base-package="com.sist.mapper"
+	factory-ref="ssf"
+	/> -->
+	<!-- 4. 구현된 클래스를 DAO에 전송 -->
+	<bean id="dao" class="com.sist.dao.FoodDAO"
+		p:mapper-ref="mapper"
+	/>
+</beans>
