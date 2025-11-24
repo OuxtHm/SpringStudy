@@ -69,12 +69,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 		Annotation / 자바로 변경됨
 		
 		1) 컨테이너 확인
-		2) DI
+		2) ***DI
 		------------------- 모든 영역의 필수 : core
-		3) AOP
-		4) MVC
+		3) ***AOP
+		4) ***MVC
 			= ORM
-		5) Transaction
+		5) ***Transaction
 		6) Spiring Security
 		
 	*/
