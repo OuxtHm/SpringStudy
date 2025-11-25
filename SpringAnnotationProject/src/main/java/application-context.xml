@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	<!-- 사용자 정의 클래스 등록 -->
+	<context:component-scan base-package="com.sist.*"/>
+<!-- 
+	스테레오 타입 => 스프링 컨테이너가 지정된 클래스만 메모리할당
+		| 선택적 메모리 할당
+	Spring-Boot
+	@Component : 일반 클래스 => MainClass
+		<bean id="mc" class="MainClass"> = map.put("mc", new MainClass())
+		@Conponent
+		class MainClass
+		{
+		}
+		=> 기본 : 클래스명 map.put("mainClass", new MainClass())
+		@Conponent("mc"
+		class MainClass
+		{
+		}
+		=> map.put("mc", new MainClass())
+		
+	@Repository : DAO => 데이터베이스
+		@Repository("dao")
+		class BoardDAO => boardDAO
+		{
+		}
+	
+	@Service	: BI(여러개의 DAO를 묶어서 사용) -> 게시판 = 댓글
+		@Service
+		class BoardService
+		{
+			ADAO, BDAO, .......
+		}
+	@Controller	: Model = JSP/ThymeLeaf => 데이터 전송 / 화면 변경
+	@RestController	: Model = 자바스크립트 연동 : JSON
+	@ControllerAdvice	: 모든 컨트롤러의 예외 처리
+	@Configuration	: XML 대신에 자바로 환경설정
+	
+	1. 코드의 가독성 향상
+	2. 확장성 => AOP 적용을 쉽게
+	3. 개발자끼리의 협업
+	4. 기능별 분리
+	
+	@Autowired : 스프링에서 자동 주입 
+					= 멤버변수의 값 지정(x)
+					= 객체 메모리 주소만 가능
+		interface I
+		{
+		}
+		class A implements I
+		{
+		
+		}
+		class B implements I
+		{
+		
+		}
+		@Autowired : I를 받은 객체 둘을 불러와 자동할당을 할 수 없으므로 
+		@Qualifier(name="a")	=> 하나를 선택하는 어노테이션을 사용
+		I i;
+		
+		
+		class A
+			@Autowired => 자동 주입 : (저장된 개겣 중에 해당 객체를 자동으로 찾아서 대입
+			BoardDAO board;
+		}
+	@PostConstruct : init-method
+		@PostConstruct
+		public void init()
+		{
+		}
+	@PreDestroy	: destroy-method
+		@PreDestroy
+		public void destroy()
+		{
+		}
+	
+	
+	
+ -->
+ 
+</beans>
