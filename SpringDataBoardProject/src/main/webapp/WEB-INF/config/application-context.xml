@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+		
+		<!-- 1. AOP 등록(공통모듈 선언) -->
+		<aop:aspectj-autoproxy/>
+		<!-- 
+			proxy 패턴 : 대리자(대신 호출)
+			1) Singleton Pattern
+			2) Factory Pattern
+			3) MVC Pattern
+			4) Proxy Pattern = 4개 (8개 => 컴바운드 패턴)
+			
+			public class BoardDAO
+			{
+				public void select()
+				{
+				
+				}
+			}
+			public class Proxy
+			{
+				BoardDAO dao;
+				public Proxy(BoardDAO dao)
+				{
+					this.dao = dao;
+				}
+				public void getConnection()
+				{
+				 
+				}
+				public void disConnection()
+				{
+					
+				}
+				public void select()
+				{
+					getConnection(); => @Before
+					dao.select();	=> PointCut
+					disConnection(); => @After => JoinPoint
+				}
+			}
+			
+			BoardDAO dao = new BoardDAO()
+			Proxy p = new Proxy(dao); = 위빙
+			p.select()
+			
+			=> 새로운 클래스를 만들어서 호출
+			=> AOP : 사용자 정의 = log
+			=> AOP 기반 => Transaction / Security
+						   ======================== 라이브러리로 제작
+						   
+			=> 금융권 : 반드시 트랜잭션
+			@Transactional
+			메소드()	   
+			try
+			{
+				setAutoCommit(false)
+				SQL 수행1
+				SQL 수행2
+				commit();
+			}catch(Exception e)
+			{
+				rollback()
+			} finally
+			{
+				setAutoCommit(true);
+			}
+		 -->
+		
+		<!-- 2. 메모리 할당(객체 생성 : 선택적) --><!-- 사용자 정의 클래스 등록 : 패키지 단위(선택적 메모리 할당) -->
+		<context:component-scan base-package="com.sist.*"/>
+		<!-- 
+			***
+			@Component			일반 클래스 (AOP 클래스, MainClass)
+			@Repository			DAO (데이터베이스)
+			@Service			DAO의 추가적인 부분
+			@Controller			Model => 화면 이동 (화면제어)
+			@RestController		Model = 다른 프로그램과 연동(자바스크립트(vue, React), 모바일(코틀린, 파이썬))
+			@ControllerAdvice	공통 예외처리
+			@Configuration		자바로 환경설정	(XML을 제외)
+			
+			DI(주입)
+			***@Required			
+			***@Autowired			=> 자동 주입
+			@PostConstruct		=> 객체 생성 시 자동 호출
+			@PreDestroy			=> 객체 소멸 시에 자동 호출
+			@Resouce			=> 1.8이후 종료
+		-->
+		<mvc:annotation-driven/>
+		<!-- @ResponseBody RedirectAttributes -->
+		<!-- 
+			@ResponseBody : 자바스크립트로 JSON 전송
+				=> @RestController 변경	
+		-->
+		<mvc:interceptors>
+			<mvc:interceptor>
+				<mvc:mapping path="/databoard/list.do"/>
+				<bean id="databoardInterceptor"
+				class="com.sist.intercepter.DataBoardIntercepter"/>
+			</mvc:interceptor>
+		</mvc:interceptors>
+		<!-- 
+					스프링
+					  |
+					요청에 해당되는 메소드 찾기 : HandlerMapping => DispatcherServlet 등록 자동 처리
+					  |
+					JSP를 찾아서 request 전송 : ViewResolver
+												=> 경로명 / 확장자
+		 -->
+		<!-- 3. ViewResolver -->
+		<bean id="viewResolver"
+			class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+			p:prefix="/"
+			p:suffix=".jsp"
+		/>
+		<!-- 4. MultipartResolver(업로드) 
+			multpartResolver: spring에서 사용하는 ID 
+		-->
+		<bean id="multipartResolver"
+			class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+		
+		
+</beans>
