@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	<!-- 데이터베이스 연동 : ORM(MyBatis, JPA) -->
+	<!-- 1. 데이터베이스 정보 수집 : DataSource 
+			defalut => 8 / 8  / 10000
+	-->
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+			p:driverClassName="oracle.jdbc.driver.OracleDriver"
+			p:url="jdbc:oracle:thin:@localhost:1521:XE"
+			p:username="hr"
+			p:password="happy"
+		/>
+	<!-- MyBatis로연결 -->
+	<!-- 2. SqlSessionFactory : getConnection, disConnection -->
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="ds"
+	/>
+	
+	<!-- Mapper가 interface = 구현 -->
+	<!-- 3. interface에 등록한 메소드 구현 요청 : MapperFactoryBean -->
+	<mybatis-spring:scan base-package="com.sist.mapper"
+		factory-ref="ssf"
+	/>
+	
+	<!-- Boot : 설정 = properties / yml -->
+	
+	<!-- 
+		스프링에서 크랠스의 메모리 할당(컨테이너 = 클래스 관리자
+		============================================
+		객체 요청 : @AutoWired(주소값 주입) => NullPointerException
+	 -->
+</beans>

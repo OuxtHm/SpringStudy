@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+		<!-- 1. AOP 등록 -->
+		<aop:aspectj-autoproxy/>
+		<!-- 
+				com.sist.aop	: 공통 모듈 (모든 Model에서 샤용되는 기능)
+									@Aspect
+				com.sist.commons	: 공통으로 사용 => 예외처리
+										@ControllerAdvice
+										@RestControllerAdvice
+				com.sist.dao	: 순수하게 데이터베이스만 연동
+										@Repository
+				com.sist.interceptor : 처리 전에 필요한 내용을 전송 = xml처리
+					요청(.do) ====== DispatcherServlet
+										|	= 처리하는 내용이 있는 경우 
+										|   = ** 자동 로그인
+										|	=  preHandle()
+									HandlerMapping => Model찾기
+										|	= @GetMapping / @PostMapping
+										|	= return "폴더명/파일명";
+										|	= ** 처리가 가능(인터셉트)
+											  ================ 로그인 시 사용이 가능
+									ViewResolver
+										| = JSP로 값 전송
+										| = JSP에 값을 받기 전에 => interceptor
+				com.sist.vo : 데이터를 모아서 전송할 목적
+								= vue로 전송 (JSON) 
+				com.sist.service : DAO 여러개를 묶어서 사용 / 부가적인 처리
+									= DAO의 유지보수를 편리하게 만든다
+									@Service
+				com.sist.web : 요청을 받아서 결과값을 전송 = Model
+									@Controller
+									@RestController
+								=> 선택적인 메모리 할당
+		 -->
+		<!-- 사용자 정의 클래스 등록 -->
+		<!-- 2. 메모리 할당(객체 생성 : 선택적 -->
+		<context:component-scan base-package="com.sist.*"/>
+		<!-- 
+			메모리 할당하면 안되는 클래스
+			1. VO : 사용자 정의 데이터형
+			2. interface : mybatis / service
+				@Component
+				@Repository
+				@Service
+				@Controller
+				@RestController
+				@ControllerAdvice
+				@Configuration
+				선택적 메모리 할당 (스프링에서 관리 요청)
+		 -->
+		<!-- 		.do
+			요청 ========= DispatcherServlet : 요청을 받는다(FrontController)
+								|
+							HandlerMapping : Model을 찾아서 메소드 호출
+								|
+							ViewResolver : JSP를 찾아서 request를 전송
+								|				= 경로명 / 확장자
+							   JSP : request에 있는 데이터를 출력
+					= 관리하는 클래스 : 사용자 정의 클래스 + 라이브러리 클래스
+									= 어노테이션			= XML로 주로 등록
+		 -->
+		<!-- 3. ViewResolver -->
+		<bean id="viewResolver"
+			class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+			p:prefix="/"
+			p:suffix=".jsp"
+		/>
+		<!-- 4. MultipartResolver(업로드) -->
+</beans>
