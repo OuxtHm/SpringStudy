@@ -13,7 +13,7 @@
       <a class="navbar-brand" href="#">SpringMVC</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
+      <li class="active"><a href="../main/main.do">Home</a></li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">맛집
         <span class="caret"></span></a>
@@ -36,7 +36,7 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">레시피
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#">레시피</a></li>
+          <li><a href="../recipe/list.do">레시피</a></li>
           <li><a href="#">셰프</a></li>
           <li><a href="#">레시피 검색</a></li>
         </ul>
