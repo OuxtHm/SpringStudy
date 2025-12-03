@@ -134,4 +134,48 @@ public class FoodRestController {
 	}
 	
 	
+	
+	@GetMapping(value="food/type_vue.do", produces="text/plain;charset=UTF-8")
+	public String food_type(int page, String type)
+	{
+		String result="";
+		
+		Map map = new HashMap();
+		final int ROWSIZE = 12;
+		int start = (ROWSIZE * page) - (ROWSIZE - 1);
+		int end = (ROWSIZE * page); 
+				
+		map.put("start", start);
+		map.put("end", end);
+		map.put("type", type);
+		
+		List<FoodVO> list = fService.foodTypeData(map);
+		int totalpage = fService.foodTypeTotalPage(type);
+		
+		// 블록별
+		final int BLOCK = 10;
+		int startPage= ((page -1) / BLOCK * BLOCK) + 1;
+		int endPage = ((page -1) / BLOCK * BLOCK) + BLOCK;
+		
+		if(endPage > totalpage)
+			endPage = totalpage;
+		
+		// JavaScript 전송
+		map.put("list", list);
+		map.put("curpage", page);
+		map.put("totalpage", totalpage);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
+		map.put("type", type);
+		
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			result = mapper.writeValueAsString(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 }
