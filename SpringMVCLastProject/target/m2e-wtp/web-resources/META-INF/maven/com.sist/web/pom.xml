@@ -21,17 +21,58 @@
       </repository>
    </repositories>
    <dependencies>
-	   <!-- Jackson -->
-	   <dependency>
-	    <groupId>com.fasterxml.jackson.core</groupId>
-	    <artifactId>jackson-databind</artifactId>
-	    <version>2.20.1</version>
-		  </dependency>
-		  <dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-core</artifactId>
-		    <version>2.20.1</version>
-		  </dependency>
+   <!-- security -->
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-aop</artifactId>
+          <version>5.1.5.RELEASE</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-jwt</artifactId>
+          <version>1.1.1.RELEASE</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-oauth2-client</artifactId>
+          <version>5.1.5.RELEASE</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-crypto</artifactId>
+          <version>5.1.5.RELEASE</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-config</artifactId>
+          <version>5.1.5.RELEASE</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-web</artifactId>
+          <version>5.1.5.RELEASE</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-core</artifactId>
+          <version>5.1.5.RELEASE</version>
+      </dependency>
+      <dependency>
+         <groupId>org.springframework.security</groupId>
+         <artifactId>spring-security-taglibs</artifactId>
+         <version>5.1.5.RELEASE</version>
+      </dependency>
+      <!-- jackson -->
+      <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+          <version>2.20.1</version>
+      </dependency>
+      <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-core</artifactId>
+          <version>2.20.1</version>
+      </dependency>
       <!-- Spring -->
       <dependency>
          <groupId>org.springframework</groupId>
@@ -139,10 +180,15 @@
          <version>5.1.5.RELEASE</version>
       </dependency>
       <dependency>
-	    <groupId>com.oracle.database.jdbc</groupId>
-	    <artifactId>ojdbc8</artifactId>
-	    <version>21.1.0.0</version>
-	</dependency>
+       <groupId>com.oracle.database.jdbc</groupId>
+       <artifactId>ojdbc8</artifactId>
+       <version>21.1.0.0</version>
+     </dependency>
+      <!-- <dependency>
+         <groupId>org.springframework</groupId>
+         <artifactId>spring-webmvc-portlet</artifactId>
+         <version>5.1.5.RELEASE</version>
+      </dependency> -->
       
       <dependency>
          <groupId>taglibs</groupId>

@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -68,7 +70,64 @@ public class BoardRestController {
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	}
 	
+	// 수정 / 삭제
+	@GetMapping("board/detail_vue.do")
+	public ResponseEntity<BoardVO> board_detail(int no)
+	{
+		BoardVO vo = new BoardVO();
+		
+		try {
+			vo = bService.boardDetailData(no);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);			
+		}
+		
+		return new ResponseEntity<>(vo, HttpStatus.OK);
+	}
 	
+	@DeleteMapping("board/delete_vue.do")
+	public ResponseEntity<Map> board_delete(int no, String pwd)
+	{
+		Map map = new HashMap();
 	
+		try {
+			String res = bService.boardDelete(no, pwd);
+			map.put("msg", res);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(map, HttpStatus.OK);
+	}
 	
+	@GetMapping("board/update_vue.do")
+	public ResponseEntity<Map> board_update(int no)
+	{
+		Map map = new HashMap();
+		
+		try {
+			BoardVO vo = bService.boardUpdateData(no);
+			map.put("name", vo.getName());
+			map.put("subject", vo.getSubject());
+			map.put("content", vo.getContent());
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(map, HttpStatus.OK);
+	}
+	
+	@PutMapping("board/update_ok_vue.do")
+	public ResponseEntity<Map> board_update_ok(@RequestBody BoardVO vo)
+	{
+		Map map = new HashMap();
+		try {
+			String res = bService.boardUpdate(vo);
+			map.put("msg", res);		
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(map, HttpStatus.OK);
+	}
 }

@@ -14,6 +14,7 @@
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="../main/main.do">Home</a></li>
+      <li><a href="../member/join.do">회원가입</a></li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">맛집
         <span class="caret"></span></a>
@@ -46,5 +47,16 @@
     </ul>
   </div>
 </nav>
+<div class="container">
+	<div class="row text-right">
+		ID:<input type="text" ref="id" size=15 class="input-sm">
+		&nbsp;
+		PW:<input type="password" ref="pwd" size=15 class="input-sm">
+		&nbsp;
+		<button class="btn btn-sm btn-primary">로그인</button>
+		자동 로그인:<input type="checkbox" id="remember-me">
+	</div>
+</div>
+<div style="height: 10px"></div>
 </body>
 </html>
